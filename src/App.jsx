@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import fetchWeatherKyiv from "./kyiv-api";
 import "./App.css";
 
 function App() {
@@ -7,9 +8,11 @@ function App() {
   const [town, setTown] = useState("");
 
   const key = "630f52faa7ee434510f43191450a8b40";
-  const lang = "pl";   
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${town}&appid=${key}&units=metric&lang=${lang}`;
-  
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${town}&appid=${key}&units=metric&lang=pl`;
+
+  useEffect(() => {
+    fetchWeatherKyiv().then((res) => setData(res.data));
+  }, []);
 
   const searchWeather = (e) => {
     if (e.key === "Enter") {
